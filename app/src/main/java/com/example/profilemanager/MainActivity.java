@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,4 +35,31 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult (intent,0);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_CANCELED) return;
+//Getting the Avatar Image we show to our users
+        ImageView avatarImage = (ImageView) findViewById(R.id.avatarImage);
+//Figuring out the correct image
+        String drawableName = "ic_logo_00";
+        int imageID = data.getIntExtra("imageID", R.id.logoImage12);
+        if (imageID == R.id.logoImage12) {
+            drawableName = "ic_logo_00";
+        } else if (imageID == R.id.logoImage00) {
+            drawableName = "ic_logo_01";
+        } else if (imageID == R.id.logoImage01) {
+            drawableName = "ic_logo_02";
+        } else if (imageID == R.id.logoImage02) {
+            drawableName = "ic_logo_03";
+        } else if (imageID == R.id.logoImage10) {
+            drawableName = "ic_logo_04";
+        } else if (imageID == R.id.logoImage11) {
+            drawableName = "ic_logo_05";
+        } else {
+            drawableName = "ic_logo_00";
+        }
+        int resID = getResources().getIdentifier(drawableName, "drawable", getPackageName());
+        avatarImage.setImageResource(resID);
+    }
 }
